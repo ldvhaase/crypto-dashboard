@@ -17,13 +17,6 @@ export const cryptoNewsApi = createApi({
             query: ({ newsCategory, count }) => ({
                 method: 'GET',
                 url: `?q=${newsCategory}&pageSize=${count}&country=us&language=en`,
-            //     params: {
-            //         'q': 'crypto',
-            //         'country': 'us',
-            //         'language': 'en',
-            //         'pageSize': '10',
-            //         'publisher': 'cnn.com,bbc.com'
-            //     },
             })
         })
     })

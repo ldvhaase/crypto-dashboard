@@ -14,17 +14,27 @@ export const cryptoApi = createApi({
 	}),
 	endpoints: (builder) => ({
 		getCryptos: builder.query({
-			query: (count) => ({ url: `/coins?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers%5B0%5D=1&orderBy=marketCap&orderDirection=desc&limit=${count}&offset=0` })
-		// Defaults
-		// referenceCurrencyUuid: yhjMzLPhuIDl
-		// timePeriod: 24h
-		// tiers: 1
-		// orderBy: marketCap
-		// orderDirection: desc
-		// limit: 50
-		// offset: 0
-		})
-	})
-})
+			query: (count) => ({ url: `/coins?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers%5B0%5D=1&orderBy=marketCap&orderDirection=desc&limit=${count}&offset=0` }),
+		}),
+		getCryptoDetails: builder.query({
+			query: (coinId) => ({ url: `/coin/${coinId}` })
+		}),
 
-export const { useGetCryptosQuery } = cryptoApi;
+		// Note: Change the coin price history endpoint from this - `coin/${coinId}/history/${timeperiod} to this - `coin/${coinId}/history?timeperiod=${timeperiod}`
+		getCryptoHistory: builder.query({
+			query: ({ coinId, timeperiod }) => ({ url: `coin/${coinId}/history?timeperiod=${timeperiod}` }),
+		}),
+
+		// Note: To access this endpoint you need premium plan
+		getExchanges: builder.query({
+			query: () => ({ url: '/exchanges' }),
+		}),
+	})
+});
+
+export const {
+	useGetCryptosQuery,
+	useGetCryptoDetailsQuery,
+	useGetExchangesQuery,
+	useGetCryptoHistoryQuery,
+} = cryptoApi;
